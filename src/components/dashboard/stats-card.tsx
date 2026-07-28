@@ -1,5 +1,6 @@
-import { ArrowUpRight, type LucideIcon } from "lucide-react"
+import { ArrowUpRight, Info, type LucideIcon } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
 
 interface StatsCardProps {
   title: string
@@ -9,6 +10,7 @@ interface StatsCardProps {
   icon?: LucideIcon
   trend?: "up" | "down"
   variant?: "default" | "dark"
+  info?: string // ADDED — optional explanatory text shown in a hover tooltip
 }
 
 export function StatsCard({
@@ -19,6 +21,7 @@ export function StatsCard({
   icon: Icon,
   trend = "up",
   variant = "default",
+  info,
 }: StatsCardProps) {
   const isPositive = trend === "up"
   const isDark = variant === "dark"
@@ -34,10 +37,29 @@ export function StatsCard({
       )}
     >
       <div className="flex items-start justify-between mb-3 md:mb-4">
-        <div className="flex-1">
+        <div className="flex-1 flex items-center gap-1.5">
           <p className={cn("text-xs md:text-sm font-medium mb-1", isDark ? "text-gray-400" : "text-primary-foreground/80")}>
             {title}
           </p>
+          {info && (
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <button
+                  type="button"
+                  className={cn(
+                    "mb-1 shrink-0 rounded-full opacity-70 hover:opacity-100 transition-opacity",
+                    isDark ? "text-gray-400" : "text-primary-foreground/80"
+                  )}
+                  aria-label={`What is ${title}?`}
+                >
+                  <Info className="size-3.5" />
+                </button>
+              </TooltipTrigger>
+              <TooltipContent className="max-w-[220px] text-xs leading-snug">
+                {info}
+              </TooltipContent>
+            </Tooltip>
+          )}
         </div>
         <button className={cn(
           "p-1.5 md:p-2 rounded-lg transition-all duration-300 flex-shrink-0",

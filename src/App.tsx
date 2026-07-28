@@ -7,7 +7,7 @@ import { StatsCard } from "@/components/dashboard/stats-card"
 import { SensorHistoryChart } from "@/components/chart-area-interactive"
 import { TempHumidityChart } from "@/components/dashboard/temp-humidity-chart"
 import { WeatherHealthCard } from "@/components/dashboard/weather-health-card"
-import { Thermometer, Droplets, Wind, Gauge } from "lucide-react"
+import { Thermometer, Droplets, Wind, FlaskConical, Gauge } from "lucide-react"
 import { useLatestReading, useBackendHealth } from "@/hooks/useAirSenseQueries"
 
 function App() {
@@ -47,7 +47,7 @@ function App() {
           </header>
 
           <div className="flex flex-1 flex-col gap-4 md:gap-6 p-4 md:p-6 bg-background">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 md:gap-6">
               <StatsCard
                 title="Temperature"
                 value={latest ? `${latest.bmeTemp.toFixed(1)} °C` : "—"}
@@ -74,15 +74,27 @@ function App() {
                 icon={Wind}
                 trend={latest && latest.eco2 < 800 ? "up" : "down"}
                 variant="dark"
+                info="Estimated CO2 equivalent, derived from the air-quality sensor's gas readings — not a direct CO2 measurement. Measured in parts per million (ppm). Below 800 ppm is considered good for indoor air."
               />
               <StatsCard
                 title="TVOC"
                 value={latest ? `${latest.tvoc} ppb` : "—"}
                 subtitle="Total volatile organic compounds"
                 percentage={latest && latest.tvoc < 220 ? "Good" : "Elevated"}
-                icon={Gauge}
+                icon={FlaskConical}
                 trend={latest && latest.tvoc < 220 ? "up" : "down"}
                 variant="dark"
+                info="Total Volatile Organic Compounds — gases released from everyday sources like paints, cleaning products, and furnishings. Measured in parts per billion (ppb). Lower values indicate fresher indoor air."
+              />
+              <StatsCard
+                title="Pressure"
+                value={latest ? `${latest.bmePres.toFixed(1)} hPa` : "—"}
+                subtitle="Atmospheric pressure"
+                percentage="Normal"
+                icon={Gauge}
+                trend="up"
+                variant="dark"
+                info="Barometric (atmospheric) pressure measured by the BME280 sensor, in hectopascals (hPa). Typical sea-level pressure is around 1013 hPa; it varies with weather and altitude."
               />
             </div>
 
