@@ -23,6 +23,19 @@ export interface SensorStats {
   [field: string]: { min: number; max: number; avg: number }
 }
 
+export interface AnalysisData {
+  airGood: number
+  needVent: number
+  humiOk: number
+  tempExt: number
+  outdoorOk: number
+}
+
+export const getAnalysisLatest = async (): Promise<{ data: AnalysisData; ts: string }> => {
+  const res = await api.get("/api/analysis/latest")
+  return { data: res.data.data, ts: res.data.ts }
+}
+
 export const getLatestReading = async (): Promise<SensorReading> => {
   const res = await api.get("/api/sensor/latest")
   return res.data.data

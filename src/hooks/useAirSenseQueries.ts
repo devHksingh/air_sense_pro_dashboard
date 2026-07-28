@@ -5,7 +5,10 @@ import {
   getSensorHistory,
   getSensorStats,
   getHealth,
+  getAnalysisLatest,
 } from "@/http/api"
+
+
 
 export function useLatestReading() {
   return useQuery({
@@ -15,6 +18,18 @@ export function useLatestReading() {
     refetchInterval: 42 * 1000, // matches ESP32's own publish cadence exactly
     refetchIntervalInBackground: true,
     refetchOnWindowFocus: false, // avoids an extra fetch on top of the 42s heartbeat
+  })
+}
+
+export function useAnalysisLatest() {
+  return useQuery({
+    queryKey: ["analysisLatest"],
+    queryFn: getAnalysisLatest,
+    staleTime: 40 * 1000,
+    refetchInterval: 42 * 1000, // matches ESP32's publish cadence, same as useLatestReading
+    refetchIntervalInBackground: true,
+    refetchOnWindowFocus: false,
+    retry: 1,
   })
 }
 
