@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query"
 import {
   getLatestReading,
   getSensorHistory,
-  getSensorStats,
+  // getSensorStats,
   getHealth,
   getAnalysisLatest,
 } from "@/http/api"
