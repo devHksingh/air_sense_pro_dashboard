@@ -9,6 +9,8 @@ import { TempHumidityChart } from "@/components/dashboard/temp-humidity-chart"
 import { WeatherHealthCard } from "@/components/dashboard/weather-health-card"
 import { Thermometer, Droplets, Wind, FlaskConical, Gauge } from "lucide-react"
 import { useLatestReading, useBackendHealth } from "@/hooks/useAirSenseQueries"
+import { MetricNotes } from "@/components/dashboard/metric-notes"
+
 
 function App() {
   const { data: latest, dataUpdatedAt } = useLatestReading()
@@ -97,6 +99,13 @@ function App() {
                 info="Barometric (atmospheric) pressure measured by the BME280 sensor, in hectopascals (hPa). Typical sea-level pressure is around 1013 hPa; it varies with weather and altitude."
               />
             </div>
+            <MetricNotes />
+            <div className="h-px bg-border" />
+            <h2 className="text-lg md:text-xl font-bold text-foreground">Charts</h2>
+            <p className="text-xs md:text-sm text-muted-foreground">
+              Interactive charts for the last 24 hours of sensor readings.
+            </p>
+            <div className="h-px bg-border" />
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-6 items-start">
               <div className="lg:col-span-2 flex flex-col gap-4 md:gap-6">
